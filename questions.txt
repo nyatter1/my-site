@@ -1,0 +1,1112 @@
+1. What function displays text in Python?
+o: print(), echo(), write(), show()
+a: print()
+l: 1
+
+1a. The print() function displays text on the screen.
+
+2. Which symbol starts a comment in Python?
+o: #, //, --, /*
+a: #
+l: 1
+
+2a. A # starts a single-line comment in Python.
+
+3. Which extension is normally used for Python files?
+o: .py, .python, .pt, .pyt
+a: .py
+l: 1
+
+3a. Python source files normally use the .py extension.
+
+4. How do you create a variable called score with the value 10?
+o: score = 10, var score = 10, int score = 10, score := 10
+a: score = 10
+l: 1
+
+4a. Python variables are created by assigning a value with =.
+
+5. Which type stores whole numbers?
+o: int, str, float, bool
+a: int
+l: 1
+
+5a. The int type stores whole numbers.
+
+6. Which type stores decimal numbers?
+o: float, int, str, bool
+a: float
+l: 2
+
+6a. The float type stores decimal numbers.
+
+7. Which type stores text?
+o: str, text, char, string
+a: str
+l: 2
+
+7a. Python uses str for text strings.
+
+8. Which type stores True or False?
+o: bool, binary, truth, bit
+a: bool
+l: 2
+
+8a. The bool type represents True or False.
+
+9. How do you write a string containing Hello?
+o: "Hello", Hello, 'Hello', Both A and C
+a: Both A and C
+l: 2
+
+9a. Strings can use matching single or double quotation marks.
+
+10. What does len() return?
+o: The number of items or characters, The largest item, The data type, A random number
+a: The number of items or characters
+l: 2
+
+10a. len() returns the number of items or characters.
+
+11. Which operator adds values?
+o: +, &, add, ++
+a: +
+l: 3
+
+11a. The + operator performs addition.
+
+12. Which operator subtracts values?
+o: -, /, *, %
+a: -
+l: 3
+
+12a. The - operator performs subtraction.
+
+13. Which operator multiplies values?
+o: *, x, multiply, ^
+a: *
+l: 3
+
+13a. The * operator performs multiplication.
+
+14. Which operator divides values?
+o: /, //, %, *
+a: /
+l: 3
+
+14a. The / operator performs regular division.
+
+15. What does // do?
+o: Floor division, Exponentiation, String joining, Remainder only
+a: Floor division
+l: 3
+
+15a. The // operator performs floor division.
+
+16. What does % return?
+o: The remainder, The quotient, The percentage symbol, The exponent
+a: The remainder
+l: 4
+
+16a. The % operator returns the remainder after division.
+
+17. Which operator means power?
+o: **, ^, pow, ^^
+a: **
+l: 4
+
+17a. Python uses ** for exponentiation.
+
+18. Which operator checks equality?
+o: ==, =, !=, ===
+a: ==
+l: 4
+
+18a. The == operator compares values for equality.
+
+19. Which operator means not equal?
+o: !=, <>, not=, !==
+a: !=
+l: 4
+
+19a. The != operator checks whether values are different.
+
+20. Which keyword creates a condition?
+o: if, when, check, case
+a: if
+l: 4
+
+20a. The if keyword starts a conditional statement.
+
+21. Which keyword handles an alternative branch?
+o: else, otherwise, then, default
+a: else
+l: 5
+
+21a. The else block runs when the if condition is false.
+
+22. Which keyword checks another condition?
+o: elif, elseif, else if, case
+a: elif
+l: 5
+
+22a. elif lets you test another condition.
+
+23. Which comparison means greater than?
+o: >, <, >=, =>
+a: >
+l: 5
+
+23a. The > operator checks whether the left value is greater.
+
+24. Which comparison means less than or equal?
+o: <=, =<, <, ==
+a: <=
+l: 5
+
+24a. The <= operator checks for less than or equal.
+
+25. Which logical operator requires both conditions?
+o: and, or, both, &&
+a: and
+l: 5
+
+25a. and is true when both conditions are true.
+
+26. Which logical operator requires at least one condition?
+o: or, and, either, ||
+a: or
+l: 6
+
+26a. or is true when at least one condition is true.
+
+27. Which keyword reverses a Boolean condition?
+o: not, reverse, !, no
+a: not
+l: 6
+
+27a. not reverses a Boolean truth value.
+
+28. Which loop repeats over an iterable?
+o: for, repeat, loop, foreach
+a: for
+l: 6
+
+28a. A for loop iterates through an iterable.
+
+29. Which loop repeats while a condition is true?
+o: while, during, until, repeat
+a: while
+l: 6
+
+29a. A while loop repeats while its condition is true.
+
+30. What values does range(5) generate?
+o: 0 to 4, 1 to 5, 0 to 5, 5 to 10
+a: 0 to 4
+l: 6
+
+30a. range(5) generates 0, 1, 2, 3, and 4.
+
+31. Which keyword stops a loop?
+o: break, stop, exit, end
+a: break
+l: 7
+
+31a. break exits the nearest loop.
+
+32. Which keyword skips an iteration?
+o: continue, skip, next, pass
+a: continue
+l: 7
+
+32a. continue skips the rest of the current iteration.
+
+33. What does pass do?
+o: Nothing, Stops the program, Repeats a loop, Returns a value
+a: Nothing
+l: 7
+
+33a. pass is a placeholder statement that does nothing.
+
+34. How do you create a list?
+o: [1, 2, 3], {1, 2, 3}, (1, 2, 3), <1, 2, 3>
+a: [1, 2, 3]
+l: 7
+
+34a. Lists use square brackets.
+
+35. How do you access the first list item?
+o: items[0], items[1], items.first, items(-1)
+a: items[0]
+l: 7
+
+35a. Python uses zero-based indexing.
+
+36. What does index -1 select?
+o: The last item, The first item, The second item, Nothing
+a: The last item
+l: 8
+
+36a. -1 refers to the last item in a sequence.
+
+37. Which list method adds to the end?
+o: append(), add(), push(), insertEnd()
+a: append()
+l: 8
+
+37a. append() adds an item to the end of a list.
+
+38. Which list method removes and returns an item?
+o: pop(), remove(), delete(), cut()
+a: pop()
+l: 8
+
+38a. pop() removes and returns an item.
+
+39. Which method sorts a list in place?
+o: sort(), order(), arrange(), sortedInPlace()
+a: sort()
+l: 8
+
+39a. sort() rearranges a list in place.
+
+40. Which function returns a sorted list?
+o: sorted(), sort(), order(), arrange()
+a: sorted()
+l: 8
+
+40a. sorted() returns a new sorted list.
+
+41. How do you create a tuple?
+o: (1, 2), [1, 2], {1, 2}, <1, 2>
+a: (1, 2)
+l: 9
+
+41a. Tuples are immutable sequences commonly written with parentheses.
+
+42. What does a dictionary store?
+o: Key-value pairs, Only numbers, Only loops, Images
+a: Key-value pairs
+l: 9
+
+42a. Dictionaries associate keys with values.
+
+43. How do you create an empty dictionary?
+o: {}, [], (), dict[]
+a: {}
+l: 9
+
+43a. Curly braces create an empty dictionary.
+
+44. How do you access a dictionary value?
+o: data[key], data(key), data->key, data.key
+a: data[key]
+l: 9
+
+44a. Square brackets can retrieve a dictionary value by key.
+
+45. Which dictionary method provides a default?
+o: get(), fetch(), value(), find()
+a: get()
+l: 9
+
+45a. get() can return a default when a key is missing.
+
+46. What are sets useful for?
+o: Unique values, Ordered duplicates, Key-value pairs, Only text
+a: Unique values
+l: 10
+
+46a. Sets store unique elements.
+
+47. Which keyword defines a function?
+o: def, function, func, define
+a: def
+l: 10
+
+47a. def defines a function.
+
+48. Which keyword sends a value back?
+o: return, send, yield, give
+a: return
+l: 10
+
+48a. return exits a function and can provide a value.
+
+49. What is a parameter?
+o: A named function input, A loop, An error, A module
+a: A named function input
+l: 10
+
+49a. Parameters receive values passed to a function.
+
+50. What is an argument?
+o: A value passed to a function, A function name, A return type, A comment
+a: A value passed to a function
+l: 10
+
+50a. An argument is supplied when calling a function.
+
+51. What is a default parameter?
+o: A fallback value, A required error, A loop, A module
+a: A fallback value
+l: 11
+
+51a. A default parameter is used when an argument is omitted.
+
+52. What does scope describe?
+o: Where a name can be accessed, How fast code runs, File size, Loop count
+a: Where a name can be accessed
+l: 11
+
+52a. Scope determines where names are available.
+
+53. Which keyword creates an anonymous function?
+o: lambda, anon, func, inline
+a: lambda
+l: 11
+
+53a. lambda creates a small anonymous function.
+
+54. What does map() commonly do?
+o: Applies a function to items, Sorts a list, Deletes items, Reads a file
+a: Applies a function to items
+l: 11
+
+54a. map() applies a function to each item.
+
+55. What does filter() commonly do?
+o: Keeps matching items, Sorts values, Adds numbers, Creates files
+a: Keeps matching items
+l: 11
+
+55a. filter() selects items matching a condition.
+
+56. What does enumerate() provide?
+o: Index and value pairs, Only indexes, Only values, Random numbers
+a: Index and value pairs
+l: 12
+
+56a. enumerate() provides an index alongside each item.
+
+57. What does zip() do?
+o: Combines iterables element by element, Compresses files, Sorts lists, Deletes duplicates
+a: Combines iterables element by element
+l: 12
+
+57a. zip() pairs items from multiple iterables.
+
+58. What does input() do?
+o: Reads user input, Prints output, Creates a file, Stops Python
+a: Reads user input
+l: 12
+
+58a. input() reads a line of text from the user.
+
+59. What type does input() normally return?
+o: str, int, float, bool
+a: str
+l: 12
+
+59a. input() normally returns a string.
+
+60. How do you convert a value to an integer?
+o: int(value), integer(value), toInt(value), number(value)
+a: int(value)
+l: 12
+
+60a. int() converts suitable values to integers.
+
+61. How do you convert a value to a float?
+o: float(value), decimal(value), toFloat(value), real(value)
+a: float(value)
+l: 13
+
+61a. float() converts suitable values to floating-point numbers.
+
+62. How do you convert a value to text?
+o: str(value), text(value), string(value), toString(value)
+a: str(value)
+l: 13
+
+62a. str() creates a string representation.
+
+63. What does type(value) return?
+o: The value's type, The value's length, A copy, A Boolean
+a: The value's type
+l: 13
+
+63a. type() can inspect an object's type.
+
+64. Which keyword begins exception handling?
+o: try, catch, error, handle
+a: try
+l: 13
+
+64a. try contains code that may raise an exception.
+
+65. Which keyword handles an exception?
+o: except, catch, handle, error
+a: except
+l: 13
+
+65a. except handles matching exceptions.
+
+66. Which block runs after try/except?
+o: finally, always, last, end
+a: finally
+l: 14
+
+66a. finally runs after exception processing.
+
+67. Which keyword manually raises an exception?
+o: raise, throw, error, fail
+a: raise
+l: 14
+
+67a. raise explicitly raises an exception.
+
+68. What is a SyntaxError?
+o: Invalid Python syntax, A missing file, A network error, A slow program
+a: Invalid Python syntax
+l: 14
+
+68a. SyntaxError occurs when Python cannot parse code.
+
+69. What is a NameError?
+o: Using an undefined name, Bad indentation only, Wrong file type, Network failure
+a: Using an undefined name
+l: 14
+
+69a. NameError occurs when a name cannot be found.
+
+70. What is a TypeError?
+o: An inappropriate type operation, A missing variable, A syntax typo, A closed file
+a: An inappropriate type operation
+l: 14
+
+70a. TypeError occurs when an operation uses an unsuitable type.
+
+71. What is an IndexError?
+o: An invalid sequence index, A missing dictionary key, Bad syntax, A file error
+a: An invalid sequence index
+l: 15
+
+71a. IndexError occurs when a sequence index is out of range.
+
+72. What is a KeyError?
+o: A missing dictionary key, A bad list index, Bad syntax, A missing module
+a: A missing dictionary key
+l: 15
+
+72a. KeyError occurs when a dictionary key is absent.
+
+73. How do you open a file for reading?
+o: open("file.txt", "r"), read("file.txt"), file("file.txt"), openRead("file.txt")
+a: open("file.txt", "r")
+l: 15
+
+73a. The r mode opens a file for reading.
+
+74. Which file mode writes and replaces content?
+o: w, r, a, x
+a: w
+l: 15
+
+74a. The w mode writes and truncates existing content.
+
+75. Which file mode appends content?
+o: a, w, r, add
+a: a
+l: 15
+
+75a. The a mode adds content to the end of a file.
+
+76. Why use with open()?
+o: It manages the file context, It makes files faster, It encrypts files, It converts files
+a: It manages the file context
+l: 16
+
+76a. with helps ensure a file is closed properly.
+
+77. Which method reads all file text?
+o: read(), readall(), get(), text()
+a: read()
+l: 16
+
+77a. read() reads the file contents.
+
+78. Which method reads one line?
+o: readline(), line(), readone(), get_line()
+a: readline()
+l: 16
+
+78a. readline() reads the next line.
+
+79. Which keyword imports a module?
+o: import, include, require, using
+a: import
+l: 16
+
+79a. import loads a module for use.
+
+80. How do you import sqrt from math?
+o: from math import sqrt, import sqrt from math, math.include(sqrt), require math.sqrt
+a: from math import sqrt
+l: 16
+
+80a. This syntax imports sqrt specifically from math.
+
+81. What does the math module provide?
+o: Math functions and constants, Web pages, Database tables, GUI windows only
+a: Math functions and constants
+l: 17
+
+81a. math provides many mathematical functions and constants.
+
+82. What does random.randint(1, 10) return?
+o: A random integer from 1 through 10, A float below 1, Always 5, A string
+a: A random integer from 1 through 10
+l: 17
+
+82a. randint includes both endpoints.
+
+83. What is a module?
+o: A reusable Python file, Only a number, Only comments, A single variable
+a: A reusable Python file
+l: 17
+
+83a. A module is a Python file containing reusable code.
+
+84. What is a package?
+o: A collection of modules, A variable, A loop, A string format
+a: A collection of modules
+l: 17
+
+84a. Packages organize related modules.
+
+85. What does pip commonly manage?
+o: Python packages, CPU settings, HTML tags, OS users
+a: Python packages
+l: 17
+
+85a. pip installs and manages Python packages.
+
+86. What are f-strings useful for?
+o: Embedding expressions in text, Creating loops, Opening files, Handling errors
+a: Embedding expressions in text
+l: 18
+
+86a. F-strings let you embed expressions inside strings.
+
+87. Which prefix creates an f-string?
+o: f, s, str, format
+a: f
+l: 18
+
+87a. The f prefix creates an f-string.
+
+88. What does string slicing do?
+o: Extracts part of a string, Sorts text, Encrypts text, Deletes a variable
+a: Extracts part of a string
+l: 18
+
+88a. Slicing extracts part of a sequence.
+
+89. What does upper() do?
+o: Converts text to uppercase, Converts to lowercase, Removes spaces, Splits text
+a: Converts text to uppercase
+l: 18
+
+89a. upper() returns an uppercase version.
+
+90. What does lower() do?
+o: Converts text to lowercase, Deletes text, Sorts text, Counts words
+a: Converts text to lowercase
+l: 18
+
+90a. lower() returns a lowercase version.
+
+91. What does strip() commonly remove?
+o: Whitespace at the ends, All vowels, Numbers, All punctuation
+a: Whitespace at the ends
+l: 19
+
+91a. strip() removes leading and trailing whitespace by default.
+
+92. What does split() commonly return?
+o: A list of pieces, A number, A Boolean, A dictionary
+a: A list of pieces
+l: 19
+
+92a. split() divides a string into a list.
+
+93. What does join() do?
+o: Combines strings with a separator, Splits a list, Sorts numbers, Deletes text
+a: Combines strings with a separator
+l: 19
+
+93a. join() combines strings using a separator.
+
+94. What is a class?
+o: A blueprint for objects, A loop, A package manager, A comment
+a: A blueprint for objects
+l: 19
+
+94a. A class defines attributes and behavior for objects.
+
+95. What is an object?
+o: An instance of a class, A comment, A module name, A loop condition
+a: An instance of a class
+l: 19
+
+95a. An object is an instance created from a class.
+
+96. What does __init__ commonly do?
+o: Initializes an object, Deletes a class, Runs a loop forever, Imports a package
+a: Initializes an object
+l: 20
+
+96a. __init__ commonly initializes instance attributes.
+
+97. What does self refer to?
+o: The current instance, The class only, The parent module, The function itself
+a: The current instance
+l: 20
+
+97a. self refers to the current object instance.
+
+98. What is inheritance?
+o: Receiving behavior from another class, Copying a file, Repeating a loop, Sorting objects
+a: Receiving behavior from another class
+l: 20
+
+98a. Inheritance allows classes to derive behavior from other classes.
+
+99. What is a list comprehension?
+o: A compact way to create a list, A sorting method, A file format, An error handler
+a: A compact way to create a list
+l: 20
+
+99a. List comprehensions concisely build lists.
+
+100. What is a dictionary comprehension?
+o: A compact way to create a dictionary, A sorting method, A file reader, A loop keyword
+a: A compact way to create a dictionary
+l: 20
+
+100a. Dictionary comprehensions concisely build dictionaries.
+
+101. What does any() return?
+o: True if at least one item is truthy, The largest item, A sorted list, The first item
+a: True if at least one item is truthy
+l: 21
+
+101a. any() checks whether at least one item is truthy.
+
+102. What does all() return?
+o: True if every item is truthy, The last item, A sorted list, The number of items
+a: True if every item is truthy
+l: 21
+
+102a. all() checks whether every item is truthy.
+
+103. What does sum() commonly calculate?
+o: A total, An average, The maximum, The length only
+a: A total
+l: 21
+
+103a. sum() adds numeric values.
+
+104. What does min() return?
+o: The smallest item, The largest item, The average, The length
+a: The smallest item
+l: 21
+
+104a. min() returns the smallest item.
+
+105. What does max() return?
+o: The largest item, The smallest item, The average, The index
+a: The largest item
+l: 21
+
+105a. max() returns the largest item.
+
+106. What does abs(-7) return?
+o: 7, -7, 0, 49
+a: 7
+l: 22
+
+106a. abs() returns the absolute value.
+
+107. What does round(3.6) return?
+o: 4, 3, 3.6, 36
+a: 4
+l: 22
+
+107a. round() rounds a number.
+
+108. What is recursion?
+o: A function calling itself, A loop using range, A class importing itself, A file opening itself
+a: A function calling itself
+l: 22
+
+108a. Recursion occurs when a function calls itself.
+
+109. What is a recursive base case?
+o: The condition that stops recursion, The first variable, A class, A module
+a: The condition that stops recursion
+l: 22
+
+109a. A base case prevents recursion from continuing forever.
+
+110. What is an iterable?
+o: An object that can be iterated over, Only a list, Only a string, A function
+a: An object that can be iterated over
+l: 22
+
+110a. Iterable objects can provide their elements during iteration.
+
+111. What is an iterator?
+o: An object that produces values during iteration, A sorted list, A file name, A Boolean
+a: An object that produces values during iteration
+l: 23
+
+111a. An iterator produces values one at a time.
+
+112. Which keyword produces values from a generator?
+o: yield, generate, return, next
+a: yield
+l: 23
+
+112a. yield pauses a generator and provides a value.
+
+113. What does next() do?
+o: Gets the next iterator value, Sorts it, Copies it, Deletes it
+a: Gets the next iterator value
+l: 23
+
+113a. next() requests the next value from an iterator.
+
+114. What does None represent?
+o: Absence of a value, Zero only, False only, An empty string
+a: Absence of a value
+l: 23
+
+114a. None commonly represents no value.
+
+115. Which operator checks object identity?
+o: is, ==, same, ===
+a: is
+l: 23
+
+115a. is checks whether two references point to the same object.
+
+116. Which operator checks membership?
+o: in, has, contains, inside
+a: in
+l: 24
+
+116a. in checks whether a value is contained in an iterable.
+
+117. What does if x: test?
+o: The truthiness of x, Exactly True only, Whether x is an integer, Whether x is None
+a: The truthiness of x
+l: 24
+
+117a. Conditions evaluate objects according to their truth value.
+
+118. What is PEP 8?
+o: A Python style guide, A package manager, A compiler, A database
+a: A Python style guide
+l: 24
+
+118a. PEP 8 gives conventions for readable Python code.
+
+119. What is a docstring?
+o: A string documenting code, A package, A loop variable, A file extension
+a: A string documenting code
+l: 24
+
+119a. Docstrings document modules, classes, functions, and methods.
+
+120. What is the purpose of comments?
+o: Explain code to humans, Speed up code, Execute commands, Store secrets
+a: Explain code to humans
+l: 24
+
+120a. Comments explain code and are ignored by Python execution.
+
+121. What does if __name__ == __main__ commonly do?
+o: Runs code when the file is executed directly, Imports modules, Creates a class, Starts a loop
+a: Runs code when the file is executed directly
+l: 25
+
+121a. This pattern separates direct execution from imported use.
+
+122. What is debugging?
+o: Finding and fixing code problems, Writing comments, Installing Python, Formatting a drive
+a: Finding and fixing code problems
+l: 25
+
+122a. Debugging is the process of finding and correcting defects.
+
+123. What is a breakpoint?
+o: A point where a debugger pauses execution, A syntax error, A loop condition, A file boundary
+a: A point where a debugger pauses execution
+l: 25
+
+123a. Breakpoints pause execution for inspection.
+
+124. What is unit testing?
+o: Testing small pieces independently, Testing only hardware, Checking internet speed, Formatting code
+a: Testing small pieces independently
+l: 25
+
+124a. Unit tests check individual components.
+
+125. Which standard module supports unit testing?
+o: unittest, testing, check, unit
+a: unittest
+l: 25
+
+125a. unittest is Python's standard unit-testing framework.
+
+126. What does JSON stand for?
+o: JavaScript Object Notation, Java Source Object Network, Joined String Object Names, JavaScript Output Number
+a: JavaScript Object Notation
+l: 26
+
+126a. JSON is a common structured data format.
+
+127. Which Python module works with JSON?
+o: json, data, jsonlib, object
+a: json
+l: 26
+
+127a. The json module encodes and decodes JSON.
+
+128. What is JSON parsing?
+o: Converting JSON into usable data, Deleting JSON, Encrypting JSON, Printing JSON only
+a: Converting JSON into usable data
+l: 26
+
+128a. Parsing interprets JSON and creates corresponding data structures.
+
+129. What is a virtual environment?
+o: An isolated Python environment, A virtual machine only, A browser, A comment
+a: An isolated Python environment
+l: 26
+
+129a. Virtual environments isolate project dependencies.
+
+130. Why use virtual environments?
+o: To isolate dependencies, To change Python syntax, To improve monitor resolution, To remove packages
+a: To isolate dependencies
+l: 26
+
+130a. Isolation lets projects use different compatible dependency versions.
+
+131. What is an API?
+o: A defined way for software to communicate, A Python loop, A file extension, A database table
+a: A defined way for software to communicate
+l: 27
+
+131a. An API defines how software can communicate and exchange data.
+
+132. What is a URL?
+o: An address for a web resource, A Python variable, A package, A loop
+a: An address for a web resource
+l: 27
+
+132a. A URL identifies the location of a network resource.
+
+133. What does HTTP commonly transfer?
+o: Web requests and responses, Python bytecode only, Keyboard signals, GPU instructions
+a: Web requests and responses
+l: 27
+
+133a. HTTP is used for communication between web clients and servers.
+
+134. What does GET commonly do?
+o: Requests data, Deletes data, Creates a class, Encrypts a file
+a: Requests data
+l: 27
+
+134a. GET is commonly used to retrieve a resource.
+
+135. What does POST commonly do?
+o: Sends data to a server, Only reads data, Deletes Python, Changes file extensions
+a: Sends data to a server
+l: 27
+
+135a. POST commonly sends data to a server for processing.
+
+136. What is a database?
+o: A system for storing and retrieving data, A Python loop, A comment format, A compiler
+a: A system for storing and retrieving data
+l: 28
+
+136a. Databases store, organize, and retrieve data.
+
+137. What does SQL commonly interact with?
+o: Relational databases, Python comments, Image pixels only, Keyboard drivers
+a: Relational databases
+l: 28
+
+137a. SQL is widely used with relational databases.
+
+138. What does CRUD stand for?
+o: Create, Read, Update, Delete, Copy, Run, Upload, Download, Code, Render, Use, Debug, Create, Replace, Undo, Deploy
+a: Create, Read, Update, Delete
+l: 28
+
+138a. CRUD describes four common data operations.
+
+139. What is an algorithm?
+o: A step-by-step problem-solving procedure, A package, A variable type, A file extension
+a: A step-by-step problem-solving procedure
+l: 28
+
+139a. An algorithm is a defined sequence of steps.
+
+140. What is Big O notation used for?
+o: Describing algorithm growth, Naming variables, Formatting strings, Handling exceptions
+a: Describing algorithm growth
+l: 28
+
+140a. Big O describes how resource use grows with input size.
+
+141. What is the main benefit of functions?
+o: Reusable organized code, They eliminate all bugs, They make every program shorter, They replace variables
+a: Reusable organized code
+l: 29
+
+141a. Functions organize reusable behavior.
+
+142. What is the main benefit of modules?
+o: Reusable code across files, Automatic internet access, No variables needed, Faster hardware
+a: Reusable code across files
+l: 29
+
+142a. Modules organize and reuse code between files.
+
+143. What does refactoring mean?
+o: Improving code structure without changing intended behavior, Deleting all code, Adding random features, Changing Python versions
+a: Improving code structure without changing intended behavior
+l: 29
+
+143a. Refactoring improves structure while preserving intended behavior.
+
+144. What is a code review?
+o: A structured examination of code, An exception, Package installation, A database query
+a: A structured examination of code
+l: 29
+
+144a. Code reviews help find bugs and design issues.
+
+145. What is version control?
+o: Tracking changes to files over time, Changing variable types, Running Python faster, Encrypting every file
+a: Tracking changes to files over time
+l: 29
+
+145a. Version control records changes and supports collaboration.
+
+146. Which tool is widely used for version control?
+o: Git, Pip, Tkinter, Jupyter
+a: Git
+l: 30
+
+146a. Git is a widely used version-control system.
+
+147. What is a Git commit?
+o: A saved snapshot of changes, A Python function, A database, A web request
+a: A saved snapshot of changes
+l: 30
+
+147a. A commit records a set of changes.
+
+148. What is a Git branch?
+o: An independent line of development, A Python loop, A database row, A file extension
+a: An independent line of development
+l: 30
+
+148a. Branches allow separate lines of development.
+
+149. What is maintainable code?
+o: Code that is easier to understand and change, Code with no comments, Code only one person can use, Code with the most lines
+a: Code that is easier to understand and change
+l: 30
+
+149a. Maintainable code is easier to modify safely.
+
+150. Which function finds the largest value?
+o: max(), large(), big(), highest()
+a: max()
+l: 30
+
+150a. max() returns the largest item.
+
+151. Which function finds the smallest value?
+o: min(), small(), low(), lowest()
+a: min()
+l: 31
+
+151a. min() returns the smallest item.
+
+152. Which function creates a sequence of numbers?
+o: range(), sequence(), numbers(), count()
+a: range()
+l: 31
+
+152a. range() produces a sequence of integers.
+
+153. What does += commonly mean?
+o: Add and assign, Subtract and assign, Compare equality, Create a function
+a: Add and assign
+l: 31
+
+153a. x += y is shorthand for adding y to x.
+
+154. What does -= commonly mean?
+o: Subtract and assign, Add and assign, Compare equality, Create a loop
+a: Subtract and assign
+l: 31
+
+154a. x -= y is shorthand for subtracting y from x.
+
+155. What does *= commonly mean?
+o: Multiply and assign, Divide and assign, Compare values, Create a list
+a: Multiply and assign
+l: 31
+
+155a. x *= y multiplies x by y and assigns the result.
+
+156. What does `/=` commonly mean?
+o: Divide and assign, Multiply and assign, Compare values, Create a tuple
+a: Divide and assign
+l: 32
+
+156a. x /= y divides x by y and assigns the result.
+
+157. What does `==` compare?
+o: Values for equality, Object identity only, Variable names, File contents
+a: Values for equality
+l: 32
+
+157a. == compares values for equality.
+
+158. What does `is not` check?
+o: Object identity is different, Values are different only, A value is missing, A loop ended
+a: Object identity is different
+l: 32
+
+158a. is not checks that two references do not refer to the same object.
+
+159. What does `not in` check?
+o: A value is not contained, A value is equal, An object is identical, A loop is finished
+a: A value is not contained
+l: 32
+
+159a. not in checks that a value is absent from an iterable.
