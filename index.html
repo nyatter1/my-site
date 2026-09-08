@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hayden's Site</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Skulpt Python Engine CDN for Live Browser Execution -->
+    <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js" type="text/javascript"></script>
+    
+    <!-- Custom Font Declarations & Global Styles -->
+    <style>
+        @font-face {
+            font-family: 'MinecraftFont';
+            src: url('https://raw.githubusercontent.com/nyatter1/Minecraft-Web/main/Minecraft.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'RobloxFont';
+            src: url('https://raw.githubusercontent.com/nyatter1/Minecraft-Web/main/RobloxFont-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'FortniteFont';
+            src: url('https://raw.githubusercontent.com/nyatter1/Minecraft-Web/main/Fortnite.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .font-minecraft { font-family: 'MinecraftFont', monospace, sans-serif; }
+        .font-roblox { font-family: 'RobloxFont', sans-serif, system-ui; }
+        .font-fortnite { font-family: 'FortniteFont', sans-serif, system-ui; }
+
+        html { scroll-behavior: smooth; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0d0d12; }
+        ::-webkit-scrollbar-thumb { background: #2a2a38; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3e3e52; }
+
+        .video-bg, .img-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            filter: blur(14px) brightness(0.6) contrast(1.1);
+            scale: 1.08;
+        }
+
+        .page-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.92);
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .page-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+        }
+
+        .warp-effect {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, rgba(0,0,0,1) 100%);
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease-in-out;
+        }
+
+        .warp-effect.active { opacity: 1; }
+    </style>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'haydens-site-app';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: "demo-key",
+            authDomain: "demo.firebaseapp.com",
+            projectId: "demo-project"
+        };
+
+        window.db = null;
+        window.auth = null;
+        window.userId = null;
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            window.db = getFirestore(app);
+            window.auth = getAuth(app);
+
+            const authenticateUser = async () => {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(window.auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(window.auth);
+                }
+            };
+
+            onAuthStateChanged(window.auth, (user) => {
+                if (user) {
+                    window.userId = user.uid;
+                    if (window.loadUserProgress) window.loadUserProgress();
+                } else {
+                    authenticateUser();
+                }
+            });
+        } catch (e) {
+            console.warn("Firebase initialized in fallback mode:", e);
+        }
+    </script>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white overflow-x-hidden">
+
+    <div id="warpTransition" class="warp-effect"></div>
+
+    <!-- MAIN LANDING CONTAINER -->
+    <main class="w-full">
+        
+        <!-- SECTION 1: Welcome / Introduction -->
+        <section class="min-h-screen flex flex-col justify-center items-center px-6 relative text-center bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+            <div class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none"></div>
+
+            <div class="max-w-3xl z-10 space-y-6">
+                <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white drop-shadow-sm">
+                    Welcome to my site!
+                </h1>
+                
+                <p class="text-lg sm:text-2xl text-slate-300 font-light leading-relaxed max-w-2xl mx-auto">
+                    Im hayden. 16. Studying in college doing games development and animation.
+                </p>
+            </div>
+
+            <a href="#games-section" class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 hover:text-white transition-colors duration-300 group">
+                <span class="text-xs tracking-widest uppercase font-semibold text-slate-500 group-hover:text-slate-300">Scroll Down</span>
+                <svg class="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </a>
+        </section>
+
+        <!-- SECTION 2: Games that I code on -->
+        <section id="games-section" class="min-h-screen flex flex-col justify-center items-center px-6 relative bg-slate-950 border-t border-slate-800/50">
+            
+            <div class="max-w-4xl w-full text-center space-y-12 py-16">
+                <h2 class="text-3xl sm:text-5xl font-bold tracking-tight text-slate-100">
+                    Games that i code on
+                </h2>
+
+                <div class="flex flex-col md:flex-row justify-center items-center gap-6 w-full max-w-4xl mx-auto pt-4">
+                    
+                    <!-- ROBLOX BUTTON -->
+                    <button onclick="openPage('robloxPage')" 
+                            class="group relative w-full md:w-1/3 px-6 py-6 rounded-2xl bg-gradient-to-r from-red-600 via-rose-600 to-red-700 text-white shadow-xl hover:shadow-red-600/25 hover:scale-105 active:scale-95 transition-all duration-300 border border-red-500/30 overflow-hidden">
+                        <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <span class="relative z-10 text-3xl sm:text-4xl tracking-wider font-roblox block drop-shadow-md">
+                            Roblox
+                        </span>
+                    </button>
+
+                    <!-- MINECRAFT BUTTON -->
+                    <button onclick="openPage('minecraftPage')" 
+                            class="group relative w-full md:w-1/3 px-6 py-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-700 text-white shadow-xl hover:shadow-emerald-600/25 hover:scale-105 active:scale-95 transition-all duration-300 border border-emerald-500/30 overflow-hidden">
+                        <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <span class="relative z-10 text-3xl sm:text-4xl font-minecraft block drop-shadow-md tracking-wide">
+                            Minecraft
+                        </span>
+                    </button>
+
+                    <!-- COURSES BUTTON -->
+                    <button onclick="openPage('coursesPage')" 
+                            class="group relative w-full md:w-1/3 px-6 py-6 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-600 text-white shadow-xl hover:shadow-orange-600/25 hover:scale-105 active:scale-95 transition-all duration-300 border border-amber-400/30 overflow-hidden">
+                        <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="relative z-10 flex flex-col items-center justify-center">
+                            <span class="text-3xl sm:text-4xl font-extrabold tracking-tight drop-shadow-md">
+                                🎓 Courses
+                            </span>
+                            <span class="text-xs uppercase font-semibold text-amber-200 mt-1 tracking-widest">Interactive Coding & AI</span>
+                        </div>
+                    </button>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ROBLOX FULLSCREEN OVERLAY PAGE -->
+    <div id="robloxPage" class="page-overlay bg-black overflow-y-auto">
+        <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+            <video id="robloxVideo" class="video-bg" autoplay loop muted playsinline preload="auto" onerror="handleVideoError(this, '#dc2626')">
+                <source src="https://raw.githubusercontent.com/nyatter1/Minecraft-Web/main/roblox.1920x1080.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-slate-950/75 backdrop-blur-sm"></div>
+        </div>
+
+        <div class="sticky top-0 z-30 w-full px-6 py-4 flex items-center justify-between bg-slate-950/60 backdrop-blur-md border-b border-white/10">
+            <button onclick="closePage('robloxPage')" 
+                    class="flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-600/80 hover:bg-red-600 text-white backdrop-blur-md border border-red-400/40 shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer font-medium text-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                <span>Back to Home</span>
+            </button>
+            <span class="font-roblox text-xl text-red-400 tracking-wider hidden sm:inline">ROBLOX CORNER</span>
+        </div>
+
+        <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-12 pb-24">
+            <div class="text-center space-y-3">
+                <h1 class="font-roblox text-4xl sm:text-6xl text-white tracking-wider drop-shadow-lg">
+                    ROBLOX HUB
+                </h1>
+                <p class="text-slate-300 text-sm sm:text-base max-w-lg mx-auto">
+                    A collection of games I play & recommend, plus updates on what I'm currently creating.
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-2 pt-4">
+                    <button onclick="filterRobloxCategory('all')" id="tab-all" class="roblox-tab active px-4 py-1.5 rounded-full text-xs font-semibold bg-red-600 text-white border border-red-500 transition-all">All</button>
+                    <button onclick="filterRobloxCategory('recommend')" id="tab-recommend" class="roblox-tab px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-all">Recommendations</button>
+                    <button onclick="filterRobloxCategory('made')" id="tab-made" class="roblox-tab px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-all">Games I've Made</button>
+                    <button onclick="filterRobloxCategory('making')" id="tab-making" class="roblox-tab px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-all">In Development</button>
+                </div>
+            </div>
+
+            <div id="roblox-section-recommend" class="space-y-6">
+                <div class="flex items-center gap-3 border-b border-slate-700/60 pb-3">
+                    <span class="p-2.5 rounded-xl bg-gradient-to-br from-red-500/30 to-rose-600/20 text-red-400 border border-red-500/30 shadow-md">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </span>
+                    <h2 class="text-2xl font-bold text-white tracking-wide">Games I Recommend</h2>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="group relative bg-slate-900/80 hover:bg-slate-900 border border-slate-800 hover:border-red-500/50 rounded-2xl overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between">
+                        <div class="aspect-video relative overflow-hidden bg-slate-950">
+                            <img src="https://wallpapers.com/images/hd/blox-fruits-game-logo-npygzghjgcfk6h0d.jpg" alt="Blox Fruits" onerror="this.onerror=null; this.src='https://placehold.co/600x340/1e293b/ffffff?text=Blox+Fruits';" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-5 space-y-3 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-xl font-bold text-white group-hover:text-red-400 transition-colors">Blox Fruits</h3>
+                                <p class="text-xs text-slate-400 mt-1">Explore, train, and fight across vast oceans.</p>
+                            </div>
+                            <a href="https://www.roblox.com/games/2753915549/Blox-Fruits" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white text-sm font-semibold transition-all">
+                                <span>Play on Roblox</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="roblox-section-made" class="space-y-6">
+                <div class="flex items-center gap-3 border-b border-slate-700/60 pb-3">
+                    <span class="p-2.5 rounded-xl bg-gradient-to-br from-emerald-500/30 to-teal-600/20 text-emerald-400 border border-emerald-500/30 shadow-md">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    </span>
+                    <h2 class="text-2xl font-bold text-white tracking-wide">Games I've Made</h2>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-slate-900/80 border border-slate-800 text-center space-y-3">
+                    <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-800/90 text-slate-400 font-bold text-lg border border-slate-700">0</div>
+                    <h3 class="text-xl font-semibold text-slate-200">None yet</h3>
+                    <p class="text-sm text-slate-400 max-w-md mx-auto">I haven't released a full public Roblox game just yet, but I'm actively practicing Lua scripting and studio building!</p>
+                </div>
+            </div>
+
+            <div id="roblox-section-making" class="space-y-6">
+                <div class="flex items-center gap-3 border-b border-slate-700/60 pb-3">
+                    <span class="p-2.5 rounded-xl bg-gradient-to-br from-indigo-500/30 to-purple-600/20 text-indigo-400 border border-indigo-500/30 shadow-md">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L5.601 15.12a2 2 0 00-1.897.683l-.707.707a1 1 0 001.414 1.414l.707-.707a.5.5 0 01.474-.17l2.387.477a8 8 0 005.147-.69l.318-.158a8 8 0 005.147-.69l2.387.477a.5.5 0 01.474.17l.707.707a1 1 0 001.414-1.414l-.707-.707zM12 2a10 10 0 100 20 10 10 0 000-20z"></path></svg>
+                    </span>
+                    <h2 class="text-2xl font-bold text-white tracking-wide">Games I'm Making</h2>
+                </div>
+
+                <div class="p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-red-950/60 via-slate-900/90 to-slate-900/90 border border-red-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-2xl">
+                    <div class="space-y-2 max-w-xl">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-red-500/20 text-red-400 border border-red-500/30">
+                            <span class="w-2 h-2 rounded-full bg-red-400 animate-ping"></span>
+                            In Active Development
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Unannounced Roblox Project</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">Currently scripting core mechanics, UI systems, and level design in Roblox Studio.</p>
+                    </div>
+
+                    <button onclick="toggleRobloxDevDetails()" class="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white text-sm font-semibold transition-all active:scale-95 flex items-center gap-2">
+                        <span id="dev-toggle-text">View Progress Notes</span>
+                        <svg id="dev-toggle-icon" class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                </div>
+
+                <div id="robloxDevDetails" class="hidden p-6 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4 text-sm text-slate-300">
+                    <h4 class="font-bold text-white flex items-center gap-2">🛠️ Roblox Development Roadmap</h4>
+                    <div class="w-full bg-slate-800 rounded-full h-2">
+                        <div class="bg-gradient-to-r from-red-600 to-rose-500 h-2 rounded-full w-[65%]"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MINECRAFT FULLSCREEN OVERLAY PAGE -->
+    <div id="minecraftPage" class="page-overlay bg-black">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <video id="minecraftVideo" class="video-bg" autoplay loop muted playsinline preload="auto" onerror="handleVideoError(this, '#059669')">
+                <source src="https://raw.githubusercontent.com/nyatter1/Minecraft-Web/main/portal-in-minecraft.3840x2160.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-black/40"></div>
+        </div>
+
+        <button onclick="closePage('minecraftPage')" 
+                class="absolute top-6 left-6 z-20 flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900/80 hover:bg-slate-900 text-slate-200 hover:text-white backdrop-blur-md border border-slate-700/60 shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            <span class="text-sm font-medium tracking-wide">Back</span>
+        </button>
+
+        <div class="relative z-10 min-h-screen flex items-center justify-center p-6 text-center">
+            <h1 class="font-minecraft text-5xl sm:text-7xl md:text-8xl text-white tracking-wider drop-shadow-[0_10px_25px_rgba(0,0,0,0.9)] select-none">
+                Nothing here
+            </h1>
+        </div>
+    </div>
+
+    <!-- COURSES OVERLAY PAGE -->
+    <div id="coursesPage" class="page-overlay bg-slate-950 overflow-y-auto">
+        <div class="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-950/30 via-slate-950 to-slate-950"></div>
+
+        <div class="sticky top-0 z-30 w-full px-6 py-4 flex items-center justify-between bg-slate-950/80 backdrop-blur-md border-b border-amber-500/20">
+            <button onclick="closePage('coursesPage')" 
+                    class="flex items-center gap-2 px-5 py-2.5 rounded-full bg-amber-600/80 hover:bg-amber-600 text-white backdrop-blur-md border border-amber-400/40 shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer font-medium text-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <span>Back to Home</span>
+            </button>
+            <div class="flex items-center gap-3 text-xs sm:text-sm font-semibold">
+                <span class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                    ❤️ <span id="userHeartsDisplay">5 Hearts</span>
+                </span>
+                <span class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                    ⚡ <span id="userXpDisplay">0 XP</span>
+                </span>
+                <span class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/30">
+                    🔥 <span id="userStreakDisplay">1 Day Streak</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-10 space-y-10 pb-24">
+            <div class="text-center space-y-3">
+                <span class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest bg-amber-500/20 text-amber-400 border border-amber-500/30">Interactive Academy</span>
+                <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight drop-shadow-md">
+                    Courses Hub
+                </h1>
+                <p class="text-slate-300 text-sm sm:text-base max-w-xl mx-auto">
+                    Master programming, AI tools, and web hosting with dynamic text-driven lessons.
+                </p>
+            </div>
+
+            <!-- Courses Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- COURSE 1: How to Code (TXT Driven Python) -->
+                <div class="group relative bg-slate-900/90 border border-amber-500/40 hover:border-amber-400 rounded-3xl p-6 shadow-2xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-1">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-2xl">🐍</span>
+                            <span id="txtFileStatusBadge" class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                                Loading questions.txt...
+                            </span>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-white group-hover:text-amber-300 transition-colors">How to Code</h2>
+                            <p class="text-xs text-amber-400 font-mono mt-0.5">Language: Python (Dynamic TXT)</p>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                            Duolingo-style gamified path! Loads questions and lessons directly from <code class="text-amber-300 font-mono">questions.txt</code> automatically.
+                        </p>
+                    </div>
+
+                    <div class="mt-8 space-y-3">
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between text-xs text-slate-400">
+                                <span>Course Progress</span>
+                                <span id="coursePercentText" class="font-bold text-amber-400">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2">
+                                <div id="courseProgressBar" class="bg-gradient-to-r from-amber-500 to-yellow-400 h-2 rounded-full w-[0%] transition-all duration-500"></div>
+                            </div>
+                        </div>
+
+                        <button onclick="startPythonCourse()" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-extrabold text-sm shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2">
+                            <span>Start Python Academy</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- COURSE 2: How to Use AI -->
+                <div class="relative bg-slate-900/50 border border-slate-800 rounded-3xl p-6 opacity-75 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="w-12 h-12 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-2xl">🤖</span>
+                            <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-slate-800 text-slate-400 border border-slate-700">Coming Soon</span>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-300">How to use AI efficiently</h2>
+                            <p class="text-xs text-slate-500 font-mono mt-0.5">Prompt Engineering & Models</p>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                            Discover what AI models to use for different tasks and workflow automation strategies.
+                        </p>
+                    </div>
+                    <button disabled class="mt-8 w-full py-3.5 px-4 rounded-xl bg-slate-800 text-slate-500 font-bold text-sm cursor-not-allowed border border-slate-700/50">Course Locked</button>
+                </div>
+
+                <!-- COURSE 3: How to Host Sites -->
+                <div class="relative bg-slate-900/50 border border-slate-800 rounded-3xl p-6 opacity-75 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="w-12 h-12 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-2xl">🌐</span>
+                            <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-slate-800 text-slate-400 border border-slate-700">Coming Soon</span>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-300">How to host sites for FREE</h2>
+                            <p class="text-xs text-slate-500 font-mono mt-0.5">GitHub Pages & Render</p>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                            Step-by-step tutorial on taking your code and deploying live websites completely free.
+                        </p>
+                    </div>
+                    <button disabled class="mt-8 w-full py-3.5 px-4 rounded-xl bg-slate-800 text-slate-500 font-bold text-sm cursor-not-allowed border border-slate-700/50">Course Locked</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- DYNAMIC TXT-POWERED PYTHON ACADEMY INTERACTIVE MODAL -->
+    <div id="pythonCourseModal" class="fixed inset-0 z-50 bg-slate-950 flex flex-col hidden overflow-hidden">
+        
+        <!-- Header Bar -->
+        <div class="px-4 sm:px-8 py-3 bg-slate-900 border-b border-slate-800 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <button onclick="closePythonModal()" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                
+                <!-- Lesson Selector Dropdown -->
+                <div class="flex items-center gap-2">
+                    <span class="text-xs text-slate-400 font-semibold hidden sm:inline">Select Lesson:</span>
+                    <select id="lessonSelectDropdown" onchange="changeLessonFromSelect(this.value)" class="bg-slate-950 border border-amber-500/40 text-amber-300 text-xs font-bold rounded-xl px-3 py-1.5 focus:outline-none focus:border-amber-400">
+                        <!-- Dynamically populated based on TXT lesson numbers -->
+                    </select>
+                </div>
+            </div>
+
+            <!-- Mode Switcher Tabs -->
+            <div class="flex items-center bg-slate-950 rounded-xl p-1 border border-slate-800 text-xs font-semibold">
+                <button onclick="switchPyTab('lessons')" id="tabBtnLessons" class="px-4 py-1.5 rounded-lg bg-amber-500 text-slate-950 transition-all font-bold">📚 TXT Lessons & Quizzes</button>
+                <button onclick="switchPyTab('ide')" id="tabBtnIde" class="px-4 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition-all">💻 Live Python IDE</button>
+            </div>
+
+            <div class="flex items-center gap-3 text-xs sm:text-sm font-bold">
+                <span class="px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 flex items-center gap-1">
+                    ❤️ <span id="modalHearts">5</span>
+                </span>
+                <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1">
+                    ⚡ <span id="modalXp">0</span> XP
+                </span>
+            </div>
+        </div>
+
+        <!-- MAIN LESSON & QUIZ VIEW -->
+        <div id="pyTabLessons" class="flex-1 overflow-y-auto p-4 sm:p-8 max-w-4xl mx-auto w-full space-y-6">
+            
+            <!-- Lesson Status Header -->
+            <div class="bg-slate-900/90 border border-slate-800 p-6 rounded-3xl space-y-3 shadow-xl">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <span id="lessonNumberBadge" class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                        Lesson 1
+                    </span>
+                    <span id="questionCounterBadge" class="text-xs text-slate-400 font-mono">
+                        Question 1 of 1 in this lesson
+                    </span>
+                </div>
+
+                <h2 id="lessonTitle" class="text-2xl sm:text-3xl font-extrabold text-white">
+                    Python Interactive Lesson
+                </h2>
+            </div>
+
+            <!-- SECTION 1: LESSON INFORMATION (Order: 5a -> 5) -->
+            <div id="lessonInfoCard" class="bg-slate-900/90 border border-amber-500/30 p-6 rounded-3xl space-y-3 shadow-xl">
+                <div class="flex items-center gap-2 border-b border-slate-800 pb-3">
+                    <span class="text-xl">━━━━━━━━━━━━━━━━━━━━</span>
+                    <h3 class="text-sm font-extrabold uppercase tracking-widest text-amber-400">LESSON INFORMATION</h3>
+                    <span class="text-xl">━━━━━━━━━━━━━━━━━━━━</span>
+                </div>
+                <div id="lessonInfoContent" class="text-slate-200 text-base leading-relaxed space-y-2">
+                    <!-- Loaded dynamically from [number]a text -->
+                </div>
+            </div>
+
+            <!-- SECTION 2: QUICK CHECK / QUIZ -->
+            <div id="quizContainer" class="bg-slate-900/90 border border-slate-800 p-6 sm:p-8 rounded-3xl space-y-6 shadow-2xl">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h3 class="text-xs font-extrabold uppercase tracking-widest text-slate-400">
+                        ━━━━━━━━━━━━━━━━━━━━ QUICK CHECK ━━━━━━━━━━━━━━━━━━━━
+                    </h3>
+                </div>
+
+                <p id="quizQuestion" class="text-lg sm:text-xl font-bold text-white leading-snug">
+                    <!-- Loaded from TXT -->
+                </p>
+
+                <!-- Multiple Choice Answer Buttons Container -->
+                <div id="quiz-options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <!-- Dynamically generated clickable option buttons -->
+                </div>
+
+                <!-- Quiz Feedback Box -->
+                <div id="quizFeedback" class="hidden p-4 rounded-2xl text-sm font-bold transition-all"></div>
+
+                <!-- Control Buttons -->
+                <div class="flex justify-between items-center pt-4 border-t border-slate-800">
+                    <button id="prevQuestionBtn" onclick="navigateQuestion(-1)" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                        Previous Question
+                    </button>
+                    <button id="nextQuestionBtn" onclick="checkSolutionOrNext()" class="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm shadow-lg transition-all active:scale-95">
+                        CHECK SOLUTION
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- MAIN IDE & LIVE TERMINAL VIEW -->
+        <div id="pyTabIde" class="flex-1 hidden flex flex-col lg:flex-row gap-4 p-4 overflow-hidden">
+            <div class="flex-1 flex flex-col bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                <div class="px-4 py-3 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                        <span class="text-xs text-slate-400 font-mono ml-2">main.py</span>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button onclick="loadTemplate('hello')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[11px] text-slate-300">Preset 1</button>
+                        <button onclick="loadTemplate('game')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[11px] text-slate-300">Preset 2</button>
+                        <button onclick="runPythonCode()" class="px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all flex items-center gap-1.5">
+                            <span>▶ Run Code</span>
+                        </button>
+                    </div>
+                </div>
+
+                <textarea id="pythonIdeInput" spellcheck="false" class="flex-1 w-full bg-slate-950 text-slate-100 font-mono text-sm p-4 outline-none resize-none selection:bg-slate-800" placeholder="# Write your Python code here...&#10;print('Hello from Python IDE!')"></textarea>
+            </div>
+
+            <div class="w-full lg:w-1/2 flex flex-col bg-black border border-slate-800 rounded-2xl overflow-hidden">
+                <div class="px-4 py-3 bg-slate-900 border-b border-slate-800 flex items-center justify-between">
+                    <span class="text-xs text-slate-400 font-mono flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        Python Terminal Output
+                    </span>
+                    <button onclick="clearTerminal()" class="text-xs text-slate-400 hover:text-white underline">Clear</button>
+                </div>
+
+                <div id="pythonTerminalOutput" class="flex-1 p-4 font-mono text-xs sm:text-sm text-emerald-400 overflow-y-auto whitespace-pre-wrap">
+Welcome to the Live Python Terminal!
+Click "Run Code" above to execute standard Python scripts instantly in your browser.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT APP LOGIC & TXT PARSER ENGINE -->
+    <script>
+        
+        let allQuestions = [];
+        let lessonsMap = {}; // Maps lessonNumber -> Array of Question Objects
+        let sortedLessonNumbers = [];
+        
+        let userProgress = {
+            currentLessonNumber: 1,
+            currentQuestionIndexInLesson: 0,
+            completedLessons: [],
+            xp: 0,
+            hearts: 5,
+            streak: 1
+        };
+
+        let activeQuestionState = {
+            questionObj: null,
+            scrambledOptions: [],
+            selectedOptionText: null,
+            isAnswerChecked: false
+        };
+
+        async function fetchAndParseQuestions() {
+            const statusBadge = document.getElementById('txtFileStatusBadge');
+            if (statusBadge) statusBadge.innerText = "Loading questions.txt...";
+
+            try {
+                const response = await fetch('questions.txt');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const rawText = await response.text();
+                parseQuestionsTxt(rawText);
+                if (statusBadge) statusBadge.innerText = "Questions Ready!";
+            } catch (error) {
+                console.warn("Could not load external questions.txt (e.g. CORS/offline), using embedded fallback questions:", error);
+                
+                // Embedded fallback sample TXT content ensuring site never breaks
+                const fallbackTxt = `1. Which Python function outputs text?\no: echo(), print(), write(), console.log()\na: print()\nl: 1\n1a. In Python, the print() function is used to display text on the screen using print("Hello").\n\n2. How do you create a variable?\no: var x = 10, x := 10, x = 10, int x = 10\na: x = 10\nl: 1\n2a. Variables store information in memory. In Python, you create one by giving it a name and assigning it a value using =.\n\n3. Which symbol means multiplication?\no: x, *, •, ^\na: *\nl: 1\n3a. Python uses the * symbol for multiplication.\n\n4. What does len() do?\no: Adds numbers, Counts items, Prints text, Creates a variable\na: Counts items\nl: 2\n5a. The len() function tells you how many items or characters are inside something.`;
+                
+                parseQuestionsTxt(fallbackTxt);
+                if (statusBadge) statusBadge.innerText = "Questions Ready (Fallback)";
+            }
+        }
+
+        function parseQuestionsTxt(rawText) {
+            allQuestions = [];
+            lessonsMap = {};
+
+            // Split into question blocks separated by blank lines
+            const rawBlocks = rawText.split(/\n\s*\n+/);
+
+            rawBlocks.forEach((block, blockIdx) => {
+                const lines = block.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+                if (lines.length === 0) return;
+
+                let questionNum = blockIdx + 1;
+                let questionText = "";
+                let options = [];
+                let answer = "";
+                let lessonNum = 1;
+                let infoText = "";
+
+                lines.forEach(line => {
+                    if (line.toLowerCase().startsWith('o:')) {
+                        // Options split by comma
+                        options = line.substring(2).split(',').map(s => s.trim()).filter(s => s.length > 0);
+                    } else if (line.toLowerCase().startsWith('a:')) {
+                        answer = line.substring(2).trim();
+                    } else if (line.toLowerCase().startsWith('l:')) {
+                        const parsedL = parseInt(line.substring(2).trim(), 10);
+                        if (!isNaN(parsedL)) lessonNum = parsedL;
+                    } else if (/^\d+a[\.\:]?/i.test(line)) {
+                        infoText = line.replace(/^\d+a[\.\:]?\s*/i, '').trim();
+                    } else if (/^\d+a\b/i.test(line)) {
+                        infoText = line.replace(/^\d+a\s*/i, '').trim();
+                    } else {
+                        // Question text line
+                        if (!questionText) {
+                            questionText = line.replace(/^\d+\.\s*/, '').trim();
+                        } else if (infoText) {
+                            infoText += " " + line.trim();
+                        }
+                    }
+                });
+
+                // Extract numeric question ID from line if present
+                const numMatch = lines.find(l => /^\d+\./.test(l));
+                if (numMatch) {
+                    const parsedNum = parseInt(numMatch.match(/^(\d+)\./)[1], 10);
+                    if (!isNaN(parsedNum)) questionNum = parsedNum;
+                }
+
+                // Malformed check requirement
+                if (!questionText || options.length === 0 || !answer) {
+                    console.warn(`Skipping malformed question block ${blockIdx + 1}: missing text, options, or answer.`);
+                    return;
+                }
+
+                const questionObj = {
+                    number: questionNum,
+                    question: questionText,
+                    options: options,
+                    answer: answer,
+                    lesson: lessonNum,
+                    info: infoText || "Read the question carefully and select the best answer."
+                };
+
+                allQuestions.push(questionObj);
+
+                if (!lessonsMap[lessonNum]) {
+                    lessonsMap[lessonNum] = [];
+                }
+                lessonsMap[lessonNum].push(questionObj);
+            });
+
+            // Sort available lesson numbers dynamically
+            sortedLessonNumbers = Object.keys(lessonsMap).map(Number).sort((a, b) => a - b);
+
+            populateLessonDropdown();
+            updateProgressUI();
+        }
+
+        function populateLessonDropdown() {
+            const dropdown = document.getElementById('lessonSelectDropdown');
+            if (!dropdown) return;
+            dropdown.innerHTML = '';
+
+            sortedLessonNumbers.forEach(lNum => {
+                const count = lessonsMap[lNum].length;
+                const opt = document.createElement('option');
+                opt.value = lNum;
+                const isDone = userProgress.completedLessons.includes(lNum) ? "✓ " : "";
+                opt.innerText = `${isDone}Lesson ${lNum} (${count} ${count === 1 ? 'question' : 'questions'})`;
+                dropdown.appendChild(opt);
+            });
+
+            if (sortedLessonNumbers.length > 0 && !lessonsMap[userProgress.currentLessonNumber]) {
+                userProgress.currentLessonNumber = sortedLessonNumbers[0];
+            }
+            dropdown.value = userProgress.currentLessonNumber;
+        }
+
+        function changeLessonFromSelect(val) {
+            userProgress.currentLessonNumber = parseInt(val, 10);
+            userProgress.currentQuestionIndexInLesson = 0;
+            renderCurrentQuestion();
+        }
+
+        function shuffleOptions(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function renderCurrentQuestion() {
+            const lessonNum = userProgress.currentLessonNumber;
+            const lessonQuestions = lessonsMap[lessonNum] || [];
+
+            if (lessonQuestions.length === 0) {
+                document.getElementById('lessonTitle').innerText = `Lesson ${lessonNum}: No Questions Found`;
+                document.getElementById('lessonInfoContent').innerText = "There are no questions configured for this lesson in questions.txt.";
+                document.getElementById('quizQuestion').innerText = "";
+                document.getElementById('quiz-options-container').innerHTML = "";
+                return;
+            }
+
+            if (userProgress.currentQuestionIndexInLesson >= lessonQuestions.length) {
+                userProgress.currentQuestionIndexInLesson = lessonQuestions.length - 1;
+            } else if (userProgress.currentQuestionIndexInLesson < 0) {
+                userProgress.currentQuestionIndexInLesson = 0;
+            }
+
+            const currentQ = lessonQuestions[userProgress.currentQuestionIndexInLesson];
+            
+            // Set active state
+            activeQuestionState.questionObj = currentQ;
+            activeQuestionState.scrambledOptions = shuffleOptions(currentQ.options);
+            activeQuestionState.selectedOptionText = null;
+            activeQuestionState.isAnswerChecked = false;
+
+            // Update UI headers
+            document.getElementById('lessonNumberBadge').innerText = `Lesson ${lessonNum}`;
+            document.getElementById('questionCounterBadge').innerText = `Question ${userProgress.currentQuestionIndexInLesson + 1} of ${lessonQuestions.length} in this lesson`;
+            document.getElementById('lessonTitle').innerText = `Lesson ${lessonNum}: Python Concept`;
+
+            // Display Information section (5a -> 5 requirement)
+            document.getElementById('lessonInfoContent').innerHTML = `<p class="font-medium text-slate-100">${currentQ.info}</p>`;
+
+            // Display Question
+            document.getElementById('quizQuestion').innerText = currentQ.question;
+
+            // Render Scrambled Options
+            const optionsContainer = document.getElementById('quiz-options-container');
+            optionsContainer.innerHTML = '';
+
+            const prefixes = ['A', 'B', 'C', 'D', 'E', 'F'];
+            activeQuestionState.scrambledOptions.forEach((optText, idx) => {
+                const prefix = prefixes[idx] || `${idx + 1}`;
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = "quiz-opt-btn w-full p-4 rounded-2xl bg-slate-800 hover:bg-slate-700/80 border border-slate-700 text-left text-sm font-semibold text-slate-200 transition-all flex items-center gap-3 active:scale-[0.98]";
+                btn.innerHTML = `
+                    <span class="w-7 h-7 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-xs font-bold text-amber-400 shrink-0">${prefix}</span>
+                    <span class="break-words">${optText}</span>
+                `;
+                btn.onclick = () => selectOption(optText, btn);
+                optionsContainer.appendChild(btn);
+            });
+
+            // Reset feedback and action button
+            const feedback = document.getElementById('quizFeedback');
+            feedback.className = "hidden p-4 rounded-2xl text-sm font-bold transition-all";
+            feedback.innerText = '';
+
+            const nextBtn = document.getElementById('nextQuestionBtn');
+            nextBtn.innerText = "CHECK SOLUTION";
+            nextBtn.className = "px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm shadow-lg transition-all active:scale-95";
+
+            document.getElementById('prevQuestionBtn').disabled = (userProgress.currentQuestionIndexInLesson === 0);
+        }
+
+        function selectOption(optText, btnElement) {
+            if (activeQuestionState.isAnswerChecked) return;
+
+            activeQuestionState.selectedOptionText = optText;
+
+            // Highlight selected button, unhighlight others
+            const allBtns = document.querySelectorAll('.quiz-opt-btn');
+            allBtns.forEach(b => {
+                b.classList.remove('border-amber-400', 'bg-amber-500/20', 'text-amber-200');
+                b.classList.add('border-slate-700', 'bg-slate-800');
+            });
+
+            btnElement.classList.remove('border-slate-700', 'bg-slate-800');
+            btnElement.classList.add('border-amber-400', 'bg-amber-500/20', 'text-amber-200');
+        }
+
+        function checkSolutionOrNext() {
+            const nextBtn = document.getElementById('nextQuestionBtn');
+            const feedback = document.getElementById('quizFeedback');
+            const currentQ = activeQuestionState.questionObj;
+            const lessonQuestions = lessonsMap[userProgress.currentLessonNumber] || [];
+
+            // Progression mode when answer is already correct
+            if (activeQuestionState.isAnswerChecked) {
+                if (userProgress.currentQuestionIndexInLesson < lessonQuestions.length - 1) {
+                    userProgress.currentQuestionIndexInLesson++;
+                    renderCurrentQuestion();
+                } else {
+                    // Completed all questions in lesson
+                    completeCurrentLesson();
+                }
+                return;
+            }
+
+            // Selection check
+            if (!activeQuestionState.selectedOptionText) {
+                feedback.className = "p-4 rounded-2xl text-sm font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 block";
+                feedback.innerText = "⚠️ Please select an answer option first!";
+                return;
+            }
+
+            // Exact text matching (handles scrambled answers accurately)
+            if (activeQuestionState.selectedOptionText === currentQ.answer) {
+                activeQuestionState.isAnswerChecked = true;
+                feedback.className = "p-4 rounded-2xl text-sm font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 block";
+                feedback.innerText = "✨ Correct answer! Great job!";
+
+                if (userProgress.currentQuestionIndexInLesson < lessonQuestions.length - 1) {
+                    nextBtn.innerText = "Next Question →";
+                } else {
+                    nextBtn.innerText = "Complete Lesson 🎉";
+                }
+                nextBtn.className = "px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm shadow-lg transition-all active:scale-95";
+
+            } else {
+                // Incorrect answer behavior & hearts system
+                deductHeart();
+                feedback.className = "p-4 rounded-2xl text-sm font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 block";
+                feedback.innerText = `❌ Incorrect! You lost 1 Heart (Remaining: ${userProgress.hearts}). Try again!`;
+            }
+        }
+
+        function deductHeart() {
+            if (userProgress.hearts > 0) {
+                userProgress.hearts--;
+            } else {
+                userProgress.hearts = 5; // Refill after reaching 0
+            }
+            saveUserProgress();
+        }
+
+        function completeCurrentLesson() {
+            const lessonNum = userProgress.currentLessonNumber;
+            if (!userProgress.completedLessons.includes(lessonNum)) {
+                userProgress.completedLessons.push(lessonNum);
+                userProgress.xp += 20; // Award XP once per lesson
+            }
+
+            saveUserProgress();
+            populateLessonDropdown();
+
+            // Auto advance to next available lesson if present
+            const nextLessonIndex = sortedLessonNumbers.indexOf(lessonNum) + 1;
+            if (nextLessonIndex < sortedLessonNumbers.length) {
+                userProgress.currentLessonNumber = sortedLessonNumbers[nextLessonIndex];
+                userProgress.currentQuestionIndexInLesson = 0;
+                document.getElementById('lessonSelectDropdown').value = userProgress.currentLessonNumber;
+                renderCurrentQuestion();
+                showTemporaryBanner(`🎉 Lesson ${lessonNum} Completed! Starting Lesson ${userProgress.currentLessonNumber}...`);
+            } else {
+                showTemporaryBanner(`🏆 Outstanding! You have completed all available lessons!`);
+            }
+        }
+
+        function navigateQuestion(direction) {
+            userProgress.currentQuestionIndexInLesson += direction;
+            renderCurrentQuestion();
+        }
+
+        function showTemporaryBanner(msg) {
+            const feedback = document.getElementById('quizFeedback');
+            feedback.className = "p-4 rounded-2xl text-sm font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 block";
+            feedback.innerText = msg;
+        }
+
+        window.loadUserProgress = async function() {
+            // Try LocalStorage first
+            try {
+                const localData = localStorage.getItem('hayden_python_progress');
+                if (localData) {
+                    userProgress = { ...userProgress, ...JSON.parse(localData) };
+                }
+            } catch (e) {
+                console.warn("LocalStorage read error:", e);
+            }
+
+            // Sync with Firestore if available
+            if (window.db && window.userId) {
+                try {
+                    const userDocRef = doc(window.db, 'artifacts', 'haydens-site-app', 'users', window.userId, 'python_course', 'progress');
+                    const snap = await getDoc(userDocRef);
+                    if (snap.exists()) {
+                        userProgress = { ...userProgress, ...snap.data() };
+                    }
+                } catch (e) {
+                    console.warn("Firestore sync load failed:", e);
+                }
+            }
+
+            updateProgressUI();
+            if (allQuestions.length > 0) renderCurrentQuestion();
+        };
+
+        window.saveUserProgress = async function() {
+            updateProgressUI();
+            
+            try {
+                localStorage.setItem('hayden_python_progress', JSON.stringify(userProgress));
+            } catch (e) {
+                console.warn("LocalStorage write error:", e);
+            }
+
+            if (window.db && window.userId) {
+                try {
+                    const userDocRef = doc(window.db, 'artifacts', 'haydens-site-app', 'users', window.userId, 'python_course', 'progress');
+                    await setDoc(userDocRef, userProgress, { merge: true });
+                } catch (e) {
+                    console.warn("Firestore sync save failed:", e);
+                }
+            }
+        };
+
+        function updateProgressUI() {
+            document.getElementById('userXpDisplay').innerText = `${userProgress.xp} XP`;
+            document.getElementById('modalXp').innerText = userProgress.xp;
+            
+            const heartsText = `${userProgress.hearts} Hearts`;
+            document.getElementById('userHeartsDisplay').innerText = heartsText;
+            document.getElementById('modalHearts').innerText = userProgress.hearts;
+
+            const total = sortedLessonNumbers.length || 1;
+            const completedCount = userProgress.completedLessons.length;
+            const percent = Math.round((completedCount / total) * 100);
+
+            const percentText = document.getElementById('coursePercentText');
+            const progressBar = document.getElementById('courseProgressBar');
+            if (percentText) percentText.innerText = `${percent}%`;
+            if (progressBar) progressBar.style.width = `${percent}%`;
+        }
+
+        function startPythonCourse() {
+            const modal = document.getElementById('pythonCourseModal');
+            modal.classList.remove('hidden');
+            if (allQuestions.length === 0) fetchAndParseQuestions();
+            renderCurrentQuestion();
+            updateProgressUI();
+        }
+
+        function closePythonModal() {
+            document.getElementById('pythonCourseModal').classList.add('hidden');
+        }
+
+        function switchPyTab(tab) {
+            const tabLessons = document.getElementById('pyTabLessons');
+            const tabIde = document.getElementById('pyTabIde');
+            const btnLessons = document.getElementById('tabBtnLessons');
+            const btnIde = document.getElementById('tabBtnIde');
+
+            if (tab === 'lessons') {
+                tabLessons.classList.remove('hidden');
+                tabIde.classList.add('hidden');
+                btnLessons.className = "px-4 py-1.5 rounded-lg bg-amber-500 text-slate-950 transition-all font-bold";
+                btnIde.className = "px-4 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition-all";
+            } else {
+                tabLessons.classList.add('hidden');
+                tabIde.classList.remove('hidden');
+                btnIde.className = "px-4 py-1.5 rounded-lg bg-amber-500 text-slate-950 transition-all font-bold";
+                btnLessons.className = "px-4 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition-all";
+            }
+        }
+
+        // Skulpt Execution
+        function outf(text) {
+            const terminal = document.getElementById('pythonTerminalOutput');
+            terminal.innerText += text;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPythonCode() {
+            const code = document.getElementById('pythonIdeInput').value;
+            const terminal = document.getElementById('pythonTerminalOutput');
+            terminal.innerText = ">>> Running script...\n";
+
+            Sk.configure({ output: outf, read: builtinRead });
+
+            const myPromise = Sk.misceval.asyncToPromise(() => {
+                return Sk.importMainWithBody("<stdin>", false, code, true);
+            });
+
+            myPromise.then(() => {
+                terminal.innerText += "\n[Process finished successfully]";
+            }, (err) => {
+                terminal.innerText += "\n[Error]: " + err.toString();
+            });
+        }
+
+        function clearTerminal() {
+            document.getElementById('pythonTerminalOutput').innerText = '>>> Terminal cleared.\n';
+        }
+
+        function loadTemplate(type) {
+            const editor = document.getElementById('pythonIdeInput');
+            if (type === 'hello') {
+                editor.value = `# Lesson 1 Example\nname = "Hayden"\nprint(f"Hello, {name}! Welcome to Python coding.")`;
+            } else if (type === 'game') {
+                editor.value = `# Mini Game Logic\nimport random\n\nplayer_hp = 100\nenemy_hp = 80\n\ndamage = random.randint(15, 30)\nenemy_hp -= damage\nprint(f"You dealt {damage} damage! Enemy HP is now {enemy_hp}.")`;
+            }
+        }
+
+        // Overlay & filter helper functions
+        function filterRobloxCategory(category) {
+            const secRecommend = document.getElementById('roblox-section-recommend');
+            const secMade = document.getElementById('roblox-section-made');
+            const secMaking = document.getElementById('roblox-section-making');
+
+            document.querySelectorAll('.roblox-tab').forEach(btn => {
+                btn.classList.remove('bg-red-600', 'text-white', 'border-red-500');
+                btn.classList.add('bg-slate-800/80', 'text-slate-300', 'border-slate-700');
+            });
+
+            const activeTab = document.getElementById('tab-' + category);
+            if (activeTab) {
+                activeTab.classList.remove('bg-slate-800/80', 'text-slate-300', 'border-slate-700');
+                activeTab.classList.add('bg-red-600', 'text-white', 'border-red-500');
+            }
+
+            if (category === 'recommend') {
+                secRecommend.style.display = 'block'; secMade.style.display = 'none'; secMaking.style.display = 'none';
+            } else if (category === 'made') {
+                secRecommend.style.display = 'none'; secMade.style.display = 'block'; secMaking.style.display = 'none';
+            } else if (category === 'making') {
+                secRecommend.style.display = 'none'; secMade.style.display = 'none'; secMaking.style.display = 'block';
+            } else {
+                secRecommend.style.display = 'block'; secMade.style.display = 'block'; secMaking.style.display = 'block';
+            }
+        }
+
+        function toggleRobloxDevDetails() {
+            const details = document.getElementById('robloxDevDetails');
+            const toggleText = document.getElementById('dev-toggle-text');
+            const toggleIcon = document.getElementById('dev-toggle-icon');
+
+            if (details.classList.contains('hidden')) {
+                details.classList.remove('hidden');
+                toggleText.innerText = 'Hide Progress Notes';
+                toggleIcon.classList.add('rotate-180');
+            } else {
+                details.classList.add('hidden');
+                toggleText.innerText = 'View Progress Notes';
+                toggleIcon.classList.remove('rotate-180');
+            }
+        }
+
+        function openPage(pageId) {
+            const transitionEl = document.getElementById('warpTransition');
+            const targetPage = document.getElementById(pageId);
+            
+            transitionEl.classList.add('active');
+            
+            setTimeout(() => {
+                targetPage.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                const video = targetPage.querySelector('video');
+                if (video) video.play().catch(e => console.log('Autoplay handled:', e));
+
+                setTimeout(() => transitionEl.classList.remove('active'), 200);
+            }, 300);
+        }
+
+        function closePage(pageId) {
+            const transitionEl = document.getElementById('warpTransition');
+            const targetPage = document.getElementById(pageId);
+            
+            transitionEl.classList.add('active');
+            
+            setTimeout(() => {
+                targetPage.classList.remove('active');
+                document.body.style.overflow = '';
+                
+                setTimeout(() => transitionEl.classList.remove('active'), 200);
+            }, 250);
+        }
+
+        function handleVideoError(videoElement, fallbackColor) {
+            const container = videoElement.parentElement;
+            videoElement.style.display = 'none';
+            container.style.backgroundColor = fallbackColor;
+            container.style.backgroundImage = `radial-gradient(circle at 50% 50%, ${fallbackColor} 0%, #000000 100%)`;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const activePages = document.querySelectorAll('.page-overlay.active');
+                activePages.forEach(page => closePage(page.id));
+                closePythonModal();
+            }
+        });
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            fetchAndParseQuestions();
+            if (window.loadUserProgress) window.loadUserProgress();
+        });
+    </script>
+</body>
+</html>
